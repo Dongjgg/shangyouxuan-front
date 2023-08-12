@@ -108,16 +108,13 @@ window.onload = function () {
                 maskDiv.style.left = left + "px";
                 maskDiv.style.top = top + "px";
 
-                //移动的比例关系 = 蒙版元素移动的距离  /  大图片元素移动的距离
-                //蒙版元素移动的距离 = 小图框宽度 – 蒙版元素的宽度
-                //大图片元素移动的距离 = 大图片宽度 – 大图框元素的宽度
+                //大图发生移动
+                //确定 bigImg 的left top
+                //移动比 = 蒙版的位置/大图的位置 = (小图的宽度-蒙版的宽度)/(大图片的宽度-大图框的宽度);
+                var scale = (smallPic.clientWidth-maskDiv.offsetWidth)/(BigImg.offsetWidth-BigPic.clientWidth)
 
-                var scale = (smallPic.clientWidth - maskDiv.offsetWidth) / (BigImg.offsetWidth - BigPic.clientWidth);
-
-                console.log(scale);  //0.495
-
-                BigImg.style.left = -left / scale + "px";
-                BigImg.style.top = -top / scale + "px";
+                BigImg.style.left = -left/scale + 'px';
+                BigImg.style.top = -top/scale + 'px';
             }
 
 
