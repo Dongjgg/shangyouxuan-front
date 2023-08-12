@@ -119,24 +119,27 @@
     //头部结束
 
     //分类导航开始
-    #navWrap{
+    #navWrap {
         border-bottom: 2px solid #e1251b;
+
         //版心元素
-       .navWrapMain{
-          width: 1200px;
-          margin: 0 auto;
-          .clearfix();
-            a{
+        .navWrapMain {
+            width: 1200px;
+            margin: 0 auto;
+            .clearfix();
+
+            a {
                 margin: 0 22px;
                 font-size: 16px;
-                color:#333;
+                color: #333;
                 float: left;
                 line-height: 50px;
-                &:first-child{
+
+                &:first-child {
                     width: 210px;
                     height: 50px;
                     background: #e1251b;
-                    color:#fff;
+                    color: #fff;
                     font-size: 14px;
                     font-weight: bold;
                     float: left;
@@ -144,11 +147,31 @@
                     line-height: 50px;
                 }
             }
-       } 
+        }
     }
-        
-
-
 
     //分类导航结束
+
+    //内容区域开始
+    #content{
+        //版心元素
+        .contentMain{
+            width: 1200px;
+            margin: 15px auto 0 auto;
+            //路径导航
+            #navPath{
+                padding: 9px 15px 9px 0;
+                font-size: 0px;
+                a{
+                    font-size: 12px;
+                }
+                i{
+                    padding: 0 5px;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    //内容区域结束
 }
