@@ -1,6 +1,9 @@
 //作用：需要将所有的DOM元素对象以及相关的资源全部都加载完毕之后，再来实现的事件函数
 window.onload = function () {
 
+    //声明一个记录点击的缩略图下标
+    var bigimgIndex = 0;
+
     //路径导航的数据渲染
     navPathDataBind();
     function navPathDataBind() {
@@ -58,6 +61,10 @@ window.onload = function () {
         var smallPic = document.querySelector('#wrapper #content .contentMain #center #left #leftTop #smallPic');
         //获取leftTop元素
         var leftTop = document.querySelector('#wrapper #content .contentMain #center #left #leftTop');
+
+        //获取数据
+        var imagessrc = goodData.imagessrc;
+
         //2.设置移入事件
         smallPic.onmouseenter = function(){
 
@@ -71,7 +78,7 @@ window.onload = function () {
 
             //5.创建大图片元素
             var BigImg = document.createElement('img');
-            BigImg.src = "images/b1.png";
+            BigImg.src = imagessrc[bigimgIndex].b;
 
             //6.大图框来追加大图片
             BigPic.appendChild(BigImg);
@@ -161,6 +168,39 @@ window.onload = function () {
 
              //7.让ul追加li元素
              ul.appendChild(newLi);
+        }
+    }
+
+    //点击缩略图的效果
+    thumbnailClick();
+    function thumbnailClick(){
+        /**
+         * 思路：
+         * 1、获取所有的li元素，并且循环发生点击事件
+         * 2、点击缩略图需要确定其下标位置来找到对应小图路径和大图路径替换现有src的值
+         */
+
+        //1.获取所有的li元素
+        var liNodes = document.querySelectorAll('#wrapper #content .contentMain #center #left #leftBottom #piclist ul li');
+        
+        var smallPic_img = document.querySelector('#wrapper #content .contentMain #center #left #leftTop #smallPic img');
+
+        var imagessrc = goodData.imagessrc;
+
+        //小图路径需要默认和imagessrc的第一个元素小图的路径是一致的
+        smallPic_img.src  = imagessrc[0].s;
+
+        //2.循环点击这些li元素
+        for(var i = 0;i<liNodes.length;i++){
+            //在点击事件之前，给每一个元素都添加上自定义的下标
+            liNodes[i].index = i; /** 还可以通过setAttribute('index',i) */
+            liNodes[i].onclick = function(){
+                 var idx = this.index; /** 事件函数中的this永远指向的是实际发生事件的目标源对象 */
+                 bigimgIndex = idx;
+
+                 //变换小图路径
+                 smallPic_img.src = imagessrc[idx].s;
+            }
         }
     }
 
