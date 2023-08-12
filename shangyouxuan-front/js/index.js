@@ -107,6 +107,17 @@ window.onload = function () {
                 //设置left和top属性
                 maskDiv.style.left = left + "px";
                 maskDiv.style.top = top + "px";
+
+                //移动的比例关系 = 蒙版元素移动的距离  /  大图片元素移动的距离
+                //蒙版元素移动的距离 = 小图框宽度 – 蒙版元素的宽度
+                //大图片元素移动的距离 = 大图片宽度 – 大图框元素的宽度
+
+                var scale = (smallPic.clientWidth - maskDiv.offsetWidth) / (BigImg.offsetWidth - BigPic.clientWidth);
+
+                console.log(scale);  //0.495
+
+                BigImg.style.left = -left / scale + "px";
+                BigImg.style.top = -top / scale + "px";
             }
 
 
