@@ -260,7 +260,7 @@ window.onload = function () {
 
     //商品参数数据的动态渲染
     rightBottomData();
-    function rightBottomData(){
+    function rightBottomData() {
         /**
          * 思路：
          * 1、找rightBottom的元素对象
@@ -270,78 +270,91 @@ window.onload = function () {
 
         //1、查找元素对象
         var chooseWrap = document.querySelector('#wrapper #content .contentMain #center #right .rightBottom .chooseWrap');
-        
+
         //2、查找数据
         var crumbData = goodData.goodsDetail.crumbData;
-        
+
         //3、循环数据
-        for(var i = 0; i< crumbData.length;i++){
+        for (var i = 0; i < crumbData.length; i++) {
 
-             //4、创建dl元素对象
-             var dlNode = document.createElement('dl');
+            //4、创建dl元素对象
+            var dlNode = document.createElement('dl');
 
-             //5、创建dt元素对象
-             var dtNode = document.createElement('dt');
-             dtNode.innerText = crumbData[i].title;
+            //5、创建dt元素对象
+            var dtNode = document.createElement('dt');
+            dtNode.innerText = crumbData[i].title;
 
-             //6、dl追加dt
-             dlNode.appendChild(dtNode);
+            //6、dl追加dt
+            dlNode.appendChild(dtNode);
 
-             //7、遍历crumbData->data元素
-             for(var j = 0;j< crumbData[i].data.length;j++){
-                  
-                  //创建dd元素
-                  var ddNode = document.createElement('dd');
-                  ddNode.innerText = crumbData[i].data[j].type;
+            //7、遍历crumbData->data元素
+            for (var j = 0; j < crumbData[i].data.length; j++) {
 
-                  //让dl来追加dd
-                  dlNode.appendChild(ddNode);
-             }
+                //创建dd元素
+                var ddNode = document.createElement('dd');
+                ddNode.innerText = crumbData[i].data[j].type;
 
-             //8、让chooseWrap追加dl
-             chooseWrap.appendChild(dlNode);
+                //让dl来追加dd
+                dlNode.appendChild(ddNode);
+            }
+
+            //8、让chooseWrap追加dl
+            chooseWrap.appendChild(dlNode);
         }
     }
 
     //点击商品参数之后的颜色排他效果
     clickddBind();
-    function clickddBind(){
+    function clickddBind() {
         /**
          * 思路：
-         * 1、获取所有的dl元素，取其中第一个dl元素下的所有dd先做测试
+         * 1、获取所有的dl元素，取其中第一个dl元素下的所有dd先做测试，
+         *   测试完毕之后在对应dl第一行下标的前面在嵌套一个for循环，目的在变换下标
          * 2、循环所有的dd元素并且添加点击事件
          * 3、确定实际发生事件的目标源对象设置其文字颜色为红色，然后给其他所有的元素颜色都重置为基础颜色(#666)
          */
 
         //1、找第一个dl下的所有的dd元素
         var dlNodes = document.querySelectorAll('#wrapper #content .contentMain #center #right .rightBottom .chooseWrap dl');
-        
-        var ddNodes = dlNodes[0].querySelectorAll('dd');
 
-        //2、遍历当前所有的dd元素
-        for(var i = 0;i<ddNodes.length;i++){
-            ddNodes[i].onclick = function(){
-                // console.log(i);
-                //  console.log(ddNodes[i]); // undefined
-                //this：表示哪一个元素真实的发生了事件
-                // console.log(this);
+        for (var i = 0; i < dlNodes.length; i++) {
 
-                for(var j = 0;j<ddNodes.length;j++){
-                    ddNodes[j].style.color = "#666";
+            (function (i) {
+
+                var ddNodes = dlNodes[i].querySelectorAll('dd');
+
+                //2、遍历当前所有的dd元素
+                for (var j = 0; j < ddNodes.length; j++) {
+
+                    ddNodes[j].onclick = function () {
+                        // console.log(i);
+                        //  console.log(ddNodes[i]); // undefined
+                        //this：表示哪一个元素真实的发生了事件
+                        // console.log(this);
+
+                        for (var k = 0; k < ddNodes.length; k++) {
+                            ddNodes[k].style.color = "#666";
+                        }
+
+                        /**
+                         * ddNodes[0].style.color = "#666";
+                         * ddNodes[1].style.color = "#666";
+                         * ddNodes[3].style.color = "#666";
+                         */
+
+                        //假设点击的是第二个元素，下标为1'
+                        //ddNodes[1].style.color = "red";
+                        //相同下标的dd元素的字体颜色在进行覆盖操作,而其他未点击的元素都是在进行重新设置颜色
+                        this.style.color = "red";
+                    }
                 }
 
-                /**
-                 * ddNodes[0].style.color = "#666";
-                 * ddNodes[1].style.color = "#666";
-                 * ddNodes[3].style.color = "#666";
-                 */
-                
-                //假设点击的是第二个元素，下标为1'
-                //ddNodes[1].style.color = "red";
-                //相同下标的dd元素的字体颜色在进行覆盖操作,而其他未点击的元素都是在进行重新设置颜色
-                this.style.color = "red";
-            }
+                console.log("============")
+            })(i)
+
+
         }
+
     }
 
 }
