@@ -258,4 +258,49 @@ window.onload = function () {
         rightTop.innerHTML = s;
     }
 
+    //商品参数数据的动态渲染
+    rightBottomData();
+    function rightBottomData(){
+        /**
+         * 思路：
+         * 1、找rightBottom的元素对象
+         * 2、查找data.js->goodData.goodsDetail.crumbData数据
+         * 3、由于数据是一个数组，需要遍历，有一个元素则需要有一个动态的dl元素对象(dt、dd)
+         */
+
+        //1、查找元素对象
+        var chooseWrap = document.querySelector('#wrapper #content .contentMain #center #right .rightBottom .chooseWrap');
+        
+        //2、查找数据
+        var crumbData = goodData.goodsDetail.crumbData;
+        
+        //3、循环数据
+        for(var i = 0; i< crumbData.length;i++){
+
+             //4、创建dl元素对象
+             var dlNode = document.createElement('dl');
+
+             //5、创建dt元素对象
+             var dtNode = document.createElement('dt');
+             dtNode.innerText = crumbData[i].title;
+
+             //6、dl追加dt
+             dlNode.appendChild(dtNode);
+
+             //7、遍历crumbData->data元素
+             for(var j = 0;j< crumbData[i].data.length;j++){
+                  
+                  //创建dd元素
+                  var ddNode = document.createElement('dd');
+                  ddNode.innerText = crumbData[i].data[j].type;
+
+                  //让dl来追加dd
+                  dlNode.appendChild(ddNode);
+             }
+
+             //8、让chooseWrap追加dl
+             chooseWrap.appendChild(dlNode);
+        }
+    }
+
 }

@@ -40,7 +40,8 @@ var goodData = {
         support: "以旧换新，闲置手机回收 4G套餐超值抢 礼品购",
         address: "广东省 深圳市 宝安区",
         evaluateNum: 670000,
-        crumbData: [
+        crumbData: 
+        [
             {
                 "title": "选择颜色",
                 "data": [
