@@ -303,4 +303,45 @@ window.onload = function () {
         }
     }
 
+    //点击商品参数之后的颜色排他效果
+    clickddBind();
+    function clickddBind(){
+        /**
+         * 思路：
+         * 1、获取所有的dl元素，取其中第一个dl元素下的所有dd先做测试
+         * 2、循环所有的dd元素并且添加点击事件
+         * 3、确定实际发生事件的目标源对象设置其文字颜色为红色，然后给其他所有的元素颜色都重置为基础颜色(#666)
+         */
+
+        //1、找第一个dl下的所有的dd元素
+        var dlNodes = document.querySelectorAll('#wrapper #content .contentMain #center #right .rightBottom .chooseWrap dl');
+        
+        var ddNodes = dlNodes[0].querySelectorAll('dd');
+
+        //2、遍历当前所有的dd元素
+        for(var i = 0;i<ddNodes.length;i++){
+            ddNodes[i].onclick = function(){
+                // console.log(i);
+                //  console.log(ddNodes[i]); // undefined
+                //this：表示哪一个元素真实的发生了事件
+                // console.log(this);
+
+                for(var j = 0;j<ddNodes.length;j++){
+                    ddNodes[j].style.color = "#666";
+                }
+
+                /**
+                 * ddNodes[0].style.color = "#666";
+                 * ddNodes[1].style.color = "#666";
+                 * ddNodes[3].style.color = "#666";
+                 */
+                
+                //假设点击的是第二个元素，下标为1'
+                //ddNodes[1].style.color = "red";
+                //相同下标的dd元素的字体颜色在进行覆盖操作,而其他未点击的元素都是在进行重新设置颜色
+                this.style.color = "red";
+            }
+        }
+    }
+
 }
