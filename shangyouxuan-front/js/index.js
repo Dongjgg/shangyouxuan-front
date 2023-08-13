@@ -444,7 +444,7 @@ window.onload = function () {
      */
     function changePriceBind(arr){
           /**
-           * 思路：
+           * 思路1：
            * 1、获取价格的标签元素
            * 2、给每一个dd标签身上默认都设置一个自定义的属性，用来记录变化的价格
            * 3、遍历arr数组，将dd元素身上的新变化的价格和已有的价格（5299）相加
@@ -469,6 +469,59 @@ window.onload = function () {
         }
 
         oldPrice.innerText = price;
+
+        //3、将变化后的价格写入到左侧标签中
+        var leftprice = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .left p');
+
+        leftprice.innerText = '¥' + price;
+
+        //4、遍历选择搭配中所有的复选框元素，看是否有选中的
+        var ipts = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .middle li input');
+
+        var newprice = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .right i');
+        
+        for(var j = 0;j < ipts.length;j++){
+            if(ipts[j].checked){
+                price+=Number(ipts[j].value);
+            }
+        }
+
+        //5、右侧的套餐价价格重新渲染
+        newprice.innerText = '¥' + price;
+
+    }
+
+
+    //选择搭配中间区域复选框选中套餐价变动效果
+    chooseprice();
+    function chooseprice(){
+        /**
+         * 思路：
+         * 1、先获取中间区域中所有的复选框元素
+         * 2、遍历这些元素取出他们的价格，和左侧的基础价格进行累加，累加之后重新写回套餐价标签里面
+         */
+
+        //1、先获取复选框元素
+        var ipts = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .middle li input');
+        var leftprice = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .left p');
+        var newprice = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .right i');
+        //2、遍历这些复选框
+        for(var i = 0 ; i < ipts.length;i++){
+            ipts[i].onclick = function(){
+                var oldprice = Number(leftprice.innerText.slice(1));
+                for(var j = 0 ; j < ipts.length;j++){
+                    if(ipts[j].checked){
+
+                          //新的价格 = 左侧价格 + 选中复选框附加价格
+                          oldprice = oldprice + Number(ipts[j].value);
+
+                    }
+                }
+
+                //3、重新写回到套餐价标签中
+                newprice.innerText = '¥' + oldprice;
+            }
+        }
     }
 
 }
