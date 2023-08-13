@@ -524,4 +524,45 @@ window.onload = function () {
         }
     }
 
+
+    //封装一个公共的选项卡函数
+    /**
+     * ① 被点击的元素   tabBtns
+     * ② 被切换显示的元素  tabConts
+     */
+    function Tab(tabBtns,tabConts){
+        for(var i = 0;i<tabBtns.length;i++){
+            tabBtns[i].index = i;
+            tabBtns[i].onclick = function(){
+                for(var j = 0;j<tabBtns.length;j++){
+                    tabBtns[j].className = '';
+                    tabConts[j].className = ''
+                }
+                this.className = 'active';
+                tabConts[this.index].className = 'active';
+            }
+        }
+    }
+
+    //点击左侧选项卡
+    leftTab();
+    function leftTab(){
+        //被点击的元素
+        var h4s = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .leftAside .asideTop h4');
+        //被切换显示的元素
+        var divs = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .leftAside .aslideContent>div');
+        //调用函数
+        Tab(h4s,divs);
+    }
+
+    //点击右侧选项卡
+    rightTab();
+    function rightTab(){
+        //被点击的元素
+        var lis =document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .BottomDetail .tabBtns li');
+        //被切换显示的元素
+        var divs = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .BottomDetail .tabContents div');
+        //调用函数
+        Tab(lis,divs);
+    }
 }
