@@ -372,7 +372,7 @@ window.onload = function () {
                         arr[i] = this.innerText;
 
                         //遍历arr数组，将非0元素的值写入到mark标记
-                        arr.forEach(function(value){
+                        arr.forEach(function(value,index){
                                //只要是为真的条件，咱们就动态的来创建mark标签
                                if(value){
                                     //创建div元素
@@ -385,6 +385,8 @@ window.onload = function () {
                                     var aNode = document.createElement('a');
                                     //并且设置值
                                     aNode.innerText = 'X';
+                                    //并且设置下标
+                                    aNode.setAttribute('index',index);
                                     //让div追加a 
                                     markDiv.appendChild(aNode);
 
@@ -393,6 +395,34 @@ window.onload = function () {
 
                                }
                         })
+
+                        //获取所有的a标签元素，并且循环发生点击事件
+                        var aNodes = document.querySelectorAll('#wrapper #content .contentMain #center #right .rightBottom .choose .mark a');
+                        
+                        for(var n = 0;n<aNodes.length;n++){
+                            aNodes[n].onclick = function(){
+                                  //获取点击的a标签身上的index属性值
+                                  var idx1 = this.getAttribute('index');
+                                 
+                                  //恢复数组中对应下标元素的值
+                                  arr[idx1] = 0;
+
+                                  //查找对应下标的那个dl行中的所有的dd元素
+                                  var ddlist = dlNodes[idx1].querySelectorAll('dd');
+                                  
+                                  //遍历所有的dd元素
+                                  for(var m = 0; m < ddlist.length;m++){
+                                        //其余所有dd的文字颜色为灰色
+                                        ddlist[m].style.color = "#666";
+                                  }
+
+                                  //默认的第一个dd文字颜色恢复成红色
+                                  ddlist[0].style.color = 'red';
+
+                                  //删除对应下标位置的mark标记
+                                  choose.removeChild(this.parentNode);
+                            }
+                        }
 
                     }
                 }
