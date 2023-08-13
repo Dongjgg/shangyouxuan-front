@@ -293,7 +293,7 @@ window.onload = function () {
                 //创建dd元素
                 var ddNode = document.createElement('dd');
                 ddNode.innerText = crumbData[i].data[j].type;
-
+                ddNode.setAttribute('price',crumbData[i].data[j].changePrice);
                 //让dl来追加dd
                 dlNode.appendChild(ddNode);
             }
@@ -369,7 +369,9 @@ window.onload = function () {
 
 
                         //点击哪一个dd元素动态的产生一个新的mark标记元素
-                        arr[i] = this.innerText;
+                        arr[i] = this;
+
+                        changePriceBind(arr); //实参
 
                         //遍历arr数组，将非0元素的值写入到mark标记
                         arr.forEach(function(value,index){
@@ -380,7 +382,7 @@ window.onload = function () {
                                     //并且设置class属性
                                     markDiv.className = 'mark';
                                     //并且设置值
-                                    markDiv.innerText = value;
+                                    markDiv.innerText = value.innerText;
                                     //创建a元素
                                     var aNode = document.createElement('a');
                                     //并且设置值
@@ -421,6 +423,9 @@ window.onload = function () {
 
                                   //删除对应下标位置的mark标记
                                   choose.removeChild(this.parentNode);
+
+                                  //调用价格函数
+                                  changePriceBind(arr);
                             }
                         }
 
@@ -431,6 +436,39 @@ window.onload = function () {
 
         }
 
+    }
+
+    //价格变动的函数声明
+    /**
+     * 这个函数是需要在点击dd的时候以及删除mark标记的时候才需要调用
+     */
+    function changePriceBind(arr){
+          /**
+           * 思路：
+           * 1、获取价格的标签元素
+           * 2、给每一个dd标签身上默认都设置一个自定义的属性，用来记录变化的价格
+           * 3、遍历arr数组，将dd元素身上的新变化的价格和已有的价格（5299）相加
+           * 4、最后将计算之后的结果重新渲染到p标签中
+           */
+
+        //1、原价格标签元素
+        var oldPrice = document.querySelector('#wrapper #content .contentMain #center #right .rightTop .priceWrap .priceTop .price p');
+
+        //取出默认的价格
+        var price = goodData.goodsDetail.price;
+
+        //2、遍历arr数组
+        for(var i = 0 ; i < arr.length;i++){
+             if(arr[i]){
+                //数据类型的强制转换
+                var changeprice = Number(arr[i].getAttribute('price'));
+                //最终价格
+                price += changeprice;
+             }
+             
+        }
+
+        oldPrice.innerText = price;
     }
 
 }
