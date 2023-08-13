@@ -565,4 +565,48 @@ window.onload = function () {
         //调用函数
         Tab(lis,divs);
     }
+
+    //右边侧边栏的点击效果
+    rightAsideBind();
+    function rightAsideBind(){
+        /**
+         * 思路：
+         * 1、先找到按钮元素，发生点击事件
+         * 2、记录一个初始的状态，在点击事件的内容进行判断,如果为关闭则展开，否则为关闭（状态取反）
+         * 3、如果为展开则设置按钮和侧边栏对应的class效果，关闭亦如此
+         */
+
+        //1、找按钮元素
+        var btns = document.querySelector('#wrapper .rightAside .btns');
+
+        //记录初始状态
+        var flag = true; //关闭
+
+        //查找侧边栏元素
+        var rightAside = document.querySelector('#wrapper .rightAside');
+
+        //2、发生点击事件
+        btns.onclick = function(){
+
+             //判断
+             if(flag){
+                 //展开
+                //  flag = false;
+
+                btns.className = "btns btnsOpen";
+
+                rightAside.className = "rightAside asideOpen";
+
+             }else{
+                 //关闭
+                //  flag = true;
+                btns.className = "btns btnsClose"
+
+                rightAside.className = "rightAside asideClose";
+             }
+
+             //无论前面的if和else执行的到底是谁，最终flag的状态都是在原来基础之上进行取反
+             flag = !flag;
+        }
+    }
 }
